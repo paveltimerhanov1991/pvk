@@ -30,3 +30,9 @@
     background: #55ACEE;
     color: white;
 }
+.name {
+    background: grey;
+    width: auto;
+    height: 200px;
+    
+}
