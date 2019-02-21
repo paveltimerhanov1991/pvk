@@ -10,7 +10,7 @@ $mainTmpl = new Template('main');
 $mainTmpl->set('title', 'Menu Application');
 $contentTmpl = new Template('content');
 $courseCardTmpl = new Template('course_card');
-$courseCardHeaderTmpl = new Template('course_card_header');
+$courseCardHeaderTmpl = new Template('course_card_header.html');
 $courseCardDataTmpl = new Template('course_card_data');
 $courseDatalistTmpl = new Template('course_data_list');
 
@@ -53,7 +53,14 @@ foreach ($courses as $course => $courseData){
 
     $courseCardDataTmpl->set('course_name', $courseData['name']);
 
-    $courseCardDataTmpl->set('course_data_list', $courseDatalistTmpl->parse());
+    $courseDatalistTmpl = new Template('course_data_list');
+    foreach ($courseData['data'] as $dish => $dishData) {
+        $courseDatalistTmpl->set('dish_name', $dishData['dish_name']);
+        $courseDatalistTmpl->set('dish_description', $dishData['dish_description']);
+        $courseDatalistTmpl->set('dish_price', $dishData['dish_price']);
+        $courseDatalistTmpl->set('discount', $dishData['discount']);
+        $courseCardDataTmpl->add('course_data_list', $courseDatalistTmpl->parse());
+    }
     $courseCardTmpl->set('course_card_data', $courseCardDataTmpl->parse());
 
     $contentTmpl->add('course_cards', $courseCardTmpl->parse());
